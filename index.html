@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <title>Trivial Friki</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- 1. Cargar librerías -->
+    <!-- IE required polyfills, in this exact order -->
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+    <script src="node_modules/systemjs/dist/system-polyfills.js"></script>
+    <script src="node_modules/angular2/es6/dev/src/testing/shims_for_IE.js"></script>
+
+    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="node_modules/rxjs/bundles/Rx.js"></script>
+    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
+    <script src="node_modules/angular2/bundles/http.dev.js"></script>
+    <script src="node_modules/angular2/bundles/router.dev.js"></script> <!-- Cargo los routers -->
+
+    <base href="/">
+
+    <!-- Cambiar a un archivo local -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="assets/css/magister.css">
+
+    <!-- Fonts -->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Load js libs only when the page is loaded. -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="assets/js/modernizr.custom.72241.js"></script>
+    <!-- Custom template scripts -->
+    <script src="assets/js/magister.js"></script>
+
+    <!-- 2. Configurar SystemJS -->
+    <script>
+      System.config({
+        packages: {
+          app: {
+            format: 'register',
+            defaultExtension: 'js'
+            }
+          }
+      });
+      System.import('app/main')
+            .then(null, console.error.bind(console));
+
+      $.material.init();
+    </script>
+  </head>
+
+  <!-- 3. Mostramos la aplicación -->
+  <body class="text-shadows">
+    <trivialFriki>Cargando...</trivialFriki>
+  </body>
+</html>

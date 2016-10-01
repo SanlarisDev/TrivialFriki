@@ -1,0 +1,11 @@
+#nuevoJugador{
+  color: #000;
+}
+
+#nuevoJugador .btn-add{
+  background: #b600ff;
+}
+
+#nuevoJugador .btn-cancel{
+  background: #ff0000;
+}
