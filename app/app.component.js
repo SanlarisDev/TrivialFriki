@@ -48,7 +48,7 @@ System.register(["angular2/core", "angular2/router", "./components/cabecera.comp
                     router_1.RouteConfig([
                         { path: "/inicio", name: "Inicio", component: inicio_component_1.InicioComponent, useAsDefault: true },
                         { path: "/registro", name: "Registro", component: registro_component_1.RegistroComponent },
-                        { path: "/juego", name: "Juego", component: juego_component_1.JuegoComponent }
+                        { path: "/juego:id", name: "Juego", component: juego_component_1.JuegoComponent }
                     ]), 
                     __metadata('design:paramtypes', [])
                 ], AppComponent);

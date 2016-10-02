@@ -3,6 +3,7 @@ import {Injectable} from "angular2/core";
 import {JUGADORES, PREGUNTAS, PARTIDAS} from "./mock.partidas";
 import {Jugador} from "../models/jugador.model";
 import {Pregunta} from "../models/pregunta.model";
+import {Partida} from "../models/partida.model";
 
 @Injectable()
 
@@ -19,5 +20,9 @@ export class PartidasService {
 
   insertJugadores(jugador: Jugador) {
     Promise.resolve(JUGADORES).then((jugadores: Jugador[]) => jugadores.push(jugador));
+  }
+
+  insertPartida(partida: Partida) {
+    Promise.resolve(PARTIDAS).then((partidas: Partida[]) => partidas.push(partida));
   }
 }

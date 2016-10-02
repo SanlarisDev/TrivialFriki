@@ -36,6 +36,9 @@ System.register(["angular2/core", "./mock.partidas"], function(exports_1, contex
                 PartidasService.prototype.insertJugadores = function (jugador) {
                     Promise.resolve(mock_partidas_1.JUGADORES).then(function (jugadores) { return jugadores.push(jugador); });
                 };
+                PartidasService.prototype.insertPartida = function (partida) {
+                    Promise.resolve(mock_partidas_1.PARTIDAS).then(function (partidas) { return partidas.push(partida); });
+                };
                 PartidasService = __decorate([
                     core_1.Injectable(), 
                     __metadata('design:paramtypes', [])

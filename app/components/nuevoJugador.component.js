@@ -29,6 +29,7 @@ System.register(["angular2/core", "../services/partidas.service", "angular2/rout
                     this._partidasService = _partidasService;
                 }
                 NuevoJugadorComponent.prototype.onSubmit = function () {
+                    var jugador = this.nuevoJugador;
                 };
                 NuevoJugadorComponent = __decorate([
                     core_1.Component({

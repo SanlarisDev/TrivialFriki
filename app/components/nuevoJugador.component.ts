@@ -14,11 +14,14 @@ import {ROUTER_DIRECTIVES, RouteConfig, Router} from "angular2/router";
 
 export class NuevoJugadorComponent{
 
+  public nuevoJugador: Jugador;
 
+  constructor(private _partidasService: PartidasService){
 
-  constructor(private _partidasService: PartidasService){}
+  }
 
   onSubmit(){
+    let jugador: Jugador = this.nuevoJugador;
 
   }
 

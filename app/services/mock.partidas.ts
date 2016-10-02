@@ -18,9 +18,9 @@ class mockPartidas{
     this.Jugador4 = new Jugador(4, "Grupo 4", "images/avatar4.png", 0);
 
     this.Pregunta1 = new Pregunta(1, "¿Quién marcó el gol que le dió el mundial a la Selección Española?",
-                                                  "Pepito Pérez", "Sergio Ramos", "Andrés Iniesta", "Luis Aragonés", 3);
+                                                  "Pepito Pérez", "Sergio Ramos", "Andrés Iniesta", "Luis Aragonés", 2);
     this.Pregunta2 = new Pregunta(2, "¿En qué año se descubrió America?",
-                                                  "1692", "1492", "2015", "568", 2);
+                                                  "1692", "1492", "2015", "568", 1);
   }
 
   getmockJugadores(){
@@ -32,7 +32,7 @@ class mockPartidas{
   }
 
   getmockPreguntasPartida(){
-    return [this.Jugador1, this.Jugador2];
+    return [this.Pregunta1, this.Pregunta2];
   }
 
   getmockPreguntas(){
@@ -43,7 +43,7 @@ class mockPartidas{
 export const JUGADORES: Jugador[] = new mockPartidas().getmockJugadores();
 
 export const PARTIDAS: Partida[] = [
-  new Partida(1, new mockPartidas().getmockJugadoresPartida(), new mockPartidas().getmockJugadoresPartida(), ["W","D"], [1,1], [1,1], true)
+  new Partida(1, new mockPartidas().getmockJugadoresPartida(), new mockPartidas().getmockPreguntasPartida(), ["W","D"], [1,1], [1,1], true)
 ];
 
 export const PREGUNTAS: Pregunta[] = new mockPartidas().getmockPreguntas();

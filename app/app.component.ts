@@ -17,7 +17,7 @@ import {JuegoComponent} from "./components/juego.component";
 @RouteConfig([
   {path: "/inicio", name: "Inicio", component: InicioComponent, useAsDefault: true},
   {path: "/registro", name: "Registro", component: RegistroComponent},
-  {path: "/juego", name: "Juego", component: JuegoComponent}
+  {path: "/juego:id", name: "Juego", component: JuegoComponent}
   //{path: "/clasificaciones", name: "Clasificacion", component: ClasificacionComponent}
 ])
 

@@ -10,29 +10,13 @@
         <div class="modal-body">
 
                 <p>
-                  Titulo:
+                  Nombre:
                   <input type="text" #titulo="ngForm" ngControl="titulo" [(ngModel)]="nuevaPelicula.titulo" value="{{TituloPelicula}}" required minlength="5"/>
                   <span *ngIf="!titulo.valid">No válido</span>
                 </p>
-
-                <p>
-                  Director:
-                  <input type="text" #director="ngForm" ngControl="director" [(ngModel)]="nuevaPelicula.director" required pattern="[A-Za-z\s]*"/>
-                  <span *ngIf="!director.valid">No válido</span>
-                </p>
-
-                <p>
-                  Año:
-                  <input type="text" #anio="ngForm" ngControl="anio" [(ngModel)]="nuevaPelicula.anio" required pattern="[0-9]{4}"/>
-                  <span *ngIf="!anio.valid">No válido</span>
-                </p>
-
-                <!--<input type="submit" value="Crear pelicula" (click)="onCrearPelicula(titulo.value, director.value, anio.value)" />-->
-                <!--<input type="submit" value="Crear pelicula" [disabled]="!miFormulario.form.valid">-->
-
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-add">Añadir</button>
+          <button type="submit" class="btn btn-add" [disabled]="!miFormulario.form.valid">Añadir</button>
           <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancelar</button>
         </div>
       </form>
