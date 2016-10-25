@@ -1,17 +1,17 @@
 import {Component} from "angular2/core";
 import {CabeceraComponent} from "./cabecera.component";
-import {NuevoJugadorComponent} from "./nuevoJugador.component";
 import {Jugador} from "../models/jugador.model";
 import {Partida} from "../models/partida.model";
 import {JUGADORES, PARTIDAS} from "../services/mock.partidas";
 import {PartidasService} from "../services/partidas.service";
+import {TrivialConf}  from "../services/mock.config";
 import {ROUTER_DIRECTIVES, RouteConfig, Router} from "angular2/router"; //Necesario para tener enlace desde app.component
 
 @Component({
   selector: "registro",
   templateUrl: "app/views/registro.html",
   providers: [PartidasService],
-  directives: [ROUTER_DIRECTIVES, CabeceraComponent, NuevoJugadorComponent]
+  directives: [ROUTER_DIRECTIVES, CabeceraComponent]
 })
 
 export class RegistroComponent {
@@ -25,12 +25,11 @@ export class RegistroComponent {
 
   public ultimoIDPartida: number;
 
-  public texto: string = "Siguiente";
+  public texto: string = "Jugar";
 
   constructor(private _partidasService: PartidasService, private _router: Router){
-    this.maxJugadores = 4;
-
     this.jugadores = [];
+    this.maxJugadores = TrivialConf.MAX_JUGADORES //Necesario para el bindeo en html
     if(!this.jugadores.length){
       this.numJugadores = ""+0;
     }else{
@@ -42,9 +41,9 @@ export class RegistroComponent {
   }
 
   addJugador(){
-    if(this.jugadores.length < this.maxJugadores){
+    if(this.jugadores.length < TrivialConf.MAX_JUGADORES){
       console.log(this.nombreNuevoJugador);
-      this.nuevoJugador = new Jugador(this.getNewIDJugador(), this.nombreNuevoJugador, "images/avatar1.jpg", 0);
+      this.nuevoJugador = new Jugador(this.getNewIDJugador(), this.nombreNuevoJugador, "images/avatar"+(this.jugadores.length+1)+".png", 0, 0, 0);
       console.log(this.nuevoJugador);
       console.log(this.jugadores);
       this.jugadores.push(this.nuevoJugador);
@@ -69,40 +68,19 @@ export class RegistroComponent {
   }
 
   onJugar(){
-
-    let partida: Partida = this.inicializarPartida();
-    console.log(partida);
-    this._partidasService.insertPartida(partida);
-    console.log(this._partidasService.getPartidas());
-    this._router.navigate(["Juego", {id: partida.id}]);
+    if(this.jugadores.length >= TrivialConf.MIN_JUGADORES){
+      let partida: Partida = new Partida(this.getNewIDPartida(), this.jugadores, this._partidasService.getPreguntas(), true);
+      console.log(partida);
+      this._partidasService.insertPartida(partida);
+      console.log(this._partidasService.getPartidas());
+      this._router.navigate(["Juego", {id: partida.id}]);
+    }else{
+      window.alert("Deben haber registrados al menos 2 jugadores");
+    }
   }
 
-  inicializarPartida(){
-    var teclas: string[]= [];
-    var aciertosJugadores: number[] = [];
-    var erroresJugadores: number[] = [];
-
-    for(var i=0; i<this.jugadores.length;i++){
-      aciertosJugadores[i]= 0;
-      erroresJugadores[i]= 0;
-
-      switch(i){
-        case 1:
-          teclas[i]="W";
-        case 2:
-          teclas[i]="A";
-        case 3:
-          teclas[i]="S";
-        case 4:
-          teclas[i]="D";
-        case 5:
-          teclas[i]="F";
-        case 6:
-          teclas[i]="G";
-        }
-    }
-
-    return new Partida(this.getNewIDPartida(), this.jugadores, this._partidasService.getPreguntas(), teclas, aciertosJugadores, erroresJugadores, true);
+  onJugarTest(){
+    this._router.navigate(["Juego", {id: 1}]);
   }
 
   getNewIDPartida(){

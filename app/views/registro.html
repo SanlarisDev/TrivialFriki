@@ -6,43 +6,52 @@
 			<div class="col-md-10 col-lg-10 col-md-offset-1 col-lg-offset-1">
 
 				<h1>Jugadores</h1>
-        <div class="row">
-          <div class="col-xs-12 margin-top-20">
-            <div class="col-xs-6">
-							<!-- Button trigger modal -->
-							<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#nuevoJugador" [disabled]="jugadores.length >= maxJugadores">
-							  + Añadir Jugador
-							</button>
-            </div>
-            <div class="col-xs-6">
-							<label for="numJugadores">Número de jugadores</label>
-							<input type="number" name="numJugadores" #numJugadores value="{{jugadores.length}}" readonly>
-            </div>
-          </div>
-        </div>
+		        <div class="row">
+		          <div class="col-xs-12 margin-top-20">
+		            <div class="col-xs-6">
+									<!-- Button trigger modal -->
+									<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#nuevoJugador" [disabled]="jugadores.length >= maxJugadores" *ngIf="jugadores.length < maxJugadores">
+									  + Añadir Jugador
+									</button>
+		            </div>
+		            <div class="col-xs-6">
+									<label for="numJugadores">Número de jugadores</label>
+									<span class="numJugadores">{{jugadores.length}}</span>
+		            </div>
+		          </div>
+		        </div>
 
-        <div class="row">
-          <div class="col-xs-12 margin-top-20 tablaJugadores">
-            <div *ngFor="#jugador of jugadores" class="panel">
-							<div class="fichaJugador">
-								<div class="avatarJugador">
-									<img src="../assets/{{jugador.avatar}}">
-								</div>
-								<div class="datosJugador">
-									<p class="labelJugador">Nombre:</p>
-									<p class="nombreJugador">{{jugador.nombre}}</p>
-									<i class="fa fa-close" (click)="deleteJugador(jugador)">Hola</i>
-								</div>
+		        <div class="row containerJugadores margen-top-15">
+		          <div class="col-xs-12 col-sm-6 margin-top-20 tablaJugadores" *ngFor="#jugador of jugadores">
+		            <div class="panel">
+									<div class="fichaJugador">
+										<div class="avatarJugador">
+											<img src="../assets/{{jugador.avatar}}">
+										</div>
+										<div class="datosJugador">
+											<p class="labelJugador">Nombre:</p>
+											<p class="nombreJugador">{{jugador.nombre}}</p>
+										</div>
+										<div class="datosBorrar">
+											<i class="fa fa-trash-o" (click)="deleteJugador(jugador)"></i>
+										</div>
+									</div>
+		            </div>
+		          </div>
+		        </div>
+		        <div class="col-xs-12">
+		        	<div class="row">
+			        	<div class="col-xs-4">
+			        		<button class="btn col-xs-12 btn-primary btn-lg" (click)="onJugar()">{{texto}}</button>
+			        	</div>
+			        	<div class="col-xs-8 text-center">
+							<button class="btn col-xs-12 btn-primary btn-lg" (click)="onJugarTest()">Jugar Test</button>
+						</div>
+					</div>
+				</div>
 
-							</div>
-            </div>
-          </div>
-        </div>
-
-
-			</div> <!-- /col -->
-		</div> <!-- /row -->
-		<button (click)="onJugar()">{{texto}}</button>
+			</div>
+		</div>
 	</div>
 </section>
 
@@ -55,10 +64,30 @@
 					<h4 class="modal-title" id="myModalLabel">Agregar Nuevo Jugador</h4>
 				</div>
 				<div class="modal-body">
-								<p>
-									Nombre:
-									<input type="text" [(ngModel)]="nombreNuevoJugador" required minlength="3"/>
-								</p>
+						<p>
+							Nombre:
+							<input type="text" [(ngModel)]="nombreNuevoJugador" required minlength="3"/>
+						</p>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-add" (click)="addJugador()" data-dismiss="modal">Añadir</button>
+					<button type="button" class="btn btn-cancel" data-dismiss="modal">Cancelar</button>
+				</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="minJugadores" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Agregar Nuevo Jugador</h4>
+				</div>
+				<div class="modal-body">
+						<p>
+							Nombre:
+							<input type="text" [(ngModel)]="nombreNuevoJugador" required minlength="3"/>
+						</p>
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-add" (click)="addJugador()" data-dismiss="modal">Añadir</button>

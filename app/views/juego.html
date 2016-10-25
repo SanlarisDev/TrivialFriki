@@ -1,27 +1,102 @@
+
 <cabecera></cabecera>
 <div class="container-fluid">
   <div class="ventanaJuego col-xs-9">
-    <div class="panel">
-      <p>{{preguntaActual.pregunta}}</p>
+
+    <div class="barraTiempo col-xs-12">
+      <div class="progress">
+        <div class="progress-bar" style="width:0%" id="progress-bar">
+          <span id="progress-seg">20s</span>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="panel col-xs-12">
+      <div class="contenido"><p class="textoPregunta">{{preguntaActual.pregunta}}</p></div>
     </div>
     <div class="panel col-xs-5">
-      <p>{{preguntaActual.opcion1}}</p>
+      <div class="icon-fruit"><img src="../assets/images/opc_kiwi.png"></div>
+      <div class="leyenda-fruit"><span>&nbsp;</span></div>
+      <div class="contenido"><p class="textoPregunta">{{preguntaActual.opcion1}}</p></div>
+      <div class="leyenda-fruit"><span>(Pulsa el Kiwi)</span></div>
     </div>
     <div class="col-xs-2">
     </div>
     <div class="panel col-xs-5">
-      <p>{{preguntaActual.opcion2}}</p>
+      <div class="icon-fruit"><img src="../assets/images/opc_naranja.png"></div>
+      <div class="leyenda-fruit"><span>&nbsp;</span></div>
+      <div class="contenido"><p class="textoPregunta">{{preguntaActual.opcion2}}</p></div>
+      <div class="leyenda-fruit"><span>(Pulsa la Naranja)</span></div>
     </div>
     <div class="panel col-xs-5">
-      <p>{{preguntaActual.opcion3}}</p>
+      <div class="icon-fruit"><img src="../assets/images/opc_manzana.png"></div>
+      <div class="leyenda-fruit"><span>&nbsp;</span></div>
+      <div class="contenido"><p class="textoPregunta">{{preguntaActual.opcion3}}</p></div>
+      <div class="leyenda-fruit"><span>(Pulsa el Manzana)</span></div>
     </div>
     <div class="col-xs-2">
     </div>
     <div class="panel col-xs-5">
-      <p>{{preguntaActual.opcion4}}</p>
+      <div class="icon-fruit"><img src="../assets/images/opc_platano.png"></div>
+      <div class="leyenda-fruit"><span>&nbsp;</span></div>
+      <div class="contenido"><p class="textoPregunta">{{preguntaActual.opcion4}}</p></div>
+      <div class="leyenda-fruit"><span>(Pulsa el Plátano)</span></div>
     </div>
   </div>
   <aside class="puntuacionJuego col-xs-3">
-    <puntuacionJuego></puntuacionJuego>
+    <div class="barraTiempo col-xs-12">
+      <div class="progress" [class.oculto]="fase!=1" [class.mostrado]="fase==1">
+        <div class="progress-bar" style="width:0%" id="progress-bar-op">
+          <span id="progress-seg-op" class="progress-seg">10s</span>
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel" *ngFor="#jugador of jugadores" [class.penalizado]="idJugadorPenalizado==jugador.id" [class.elegido]="idJugadorElegido==jugador.id">
+
+          <div class="avatarJugador">
+            <img src="../assets/{{jugador.avatar}}">
+          </div>
+          <div class="datosJugador">
+            <p class="nombreJugador">{{jugador.nombre}}</p>
+            <p class="puntuacion">Puntos: {{jugador.puntosPartida}}</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </aside>
+
+  <div id="alertRespuesta">
+    <div id="alertFallo">
+      <div class="recuadro">
+        <h2>Incorrecto</h2>
+      </div>
+    </div>
+    <div id="alertAcierto">
+      <div class="recuadro">
+        <h2>Correcto</h2>
+      </div>
+    </div>
+    <div id="alertSiguiente">
+      <div class="recuadro">
+        <h2>Siguiente Pregunta... </h2>
+      </div>
+    </div>
+    <div id="alertGanador">
+      <div class="recuadro">
+        <div *ngIf="ganador.puntosPartida > 0">
+          <h2>¡¡HA GANADO {{ganador.nombre}}!! </h2>
+          <p>{{ganador.puntosPartida}} puntos</p>
+        </div>
+
+        <div *ngIf="ganador.puntosPartida==0">
+          <h2>¡¡EMPATE!! </h2>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

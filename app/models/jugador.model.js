@@ -6,10 +6,12 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             Jugador = (function () {
-                function Jugador(id, nombre, avatar, puntosTotal) {
+                function Jugador(id, nombre, avatar, puntosPartida, teclaPartida, puntosTotal) {
                     this.id = id;
                     this.nombre = nombre;
                     this.avatar = avatar;
+                    this.puntosPartida = puntosPartida;
+                    this.teclaPartida = teclaPartida;
                     this.puntosTotal = puntosTotal;
                 }
                 return Jugador;

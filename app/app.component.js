@@ -1,4 +1,4 @@
-System.register(["angular2/core", "angular2/router", "./components/cabecera.component", "./components/nuevoJugador.component", "./components/inicio.component", "./components/registro.component", "./components/juego.component"], function(exports_1, context_1) {
+System.register(["angular2/core", "angular2/router", "./components/cabecera.component", "./components/inicio.component", "./components/registro.component", "./components/juego.component"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["angular2/core", "angular2/router", "./components/cabecera.comp
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, cabecera_component_1, nuevoJugador_component_1, inicio_component_1, registro_component_1, juego_component_1;
+    var core_1, router_1, cabecera_component_1, inicio_component_1, registro_component_1, juego_component_1;
     var AppComponent;
     return {
         setters:[
@@ -22,9 +22,6 @@ System.register(["angular2/core", "angular2/router", "./components/cabecera.comp
             },
             function (cabecera_component_1_1) {
                 cabecera_component_1 = cabecera_component_1_1;
-            },
-            function (nuevoJugador_component_1_1) {
-                nuevoJugador_component_1 = nuevoJugador_component_1_1;
             },
             function (inicio_component_1_1) {
                 inicio_component_1 = inicio_component_1_1;
@@ -43,7 +40,7 @@ System.register(["angular2/core", "angular2/router", "./components/cabecera.comp
                     core_1.Component({
                         selector: "trivialFriki",
                         templateUrl: "app/views/app.html",
-                        directives: [router_1.ROUTER_DIRECTIVES, cabecera_component_1.CabeceraComponent, inicio_component_1.InicioComponent, registro_component_1.RegistroComponent, nuevoJugador_component_1.NuevoJugadorComponent]
+                        directives: [router_1.ROUTER_DIRECTIVES, cabecera_component_1.CabeceraComponent, inicio_component_1.InicioComponent, registro_component_1.RegistroComponent]
                     }),
                     router_1.RouteConfig([
                         { path: "/inicio", name: "Inicio", component: inicio_component_1.InicioComponent, useAsDefault: true },

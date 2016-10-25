@@ -1,4 +1,4 @@
-System.register(["angular2/core", "./cabecera.component", "./nuevoJugador.component", "../models/jugador.model", "../models/partida.model", "../services/partidas.service", "angular2/router"], function(exports_1, context_1) {
+System.register(["angular2/core", "./cabecera.component", "../models/jugador.model", "../models/partida.model", "../services/partidas.service", "../services/mock.config", "angular2/router"], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(["angular2/core", "./cabecera.component", "./nuevoJugador.compon
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, cabecera_component_1, nuevoJugador_component_1, jugador_model_1, partida_model_1, partidas_service_1, router_1;
+    var core_1, cabecera_component_1, jugador_model_1, partida_model_1, partidas_service_1, mock_config_1, router_1;
     var RegistroComponent;
     return {
         setters:[
@@ -19,9 +19,6 @@ System.register(["angular2/core", "./cabecera.component", "./nuevoJugador.compon
             },
             function (cabecera_component_1_1) {
                 cabecera_component_1 = cabecera_component_1_1;
-            },
-            function (nuevoJugador_component_1_1) {
-                nuevoJugador_component_1 = nuevoJugador_component_1_1;
             },
             function (jugador_model_1_1) {
                 jugador_model_1 = jugador_model_1_1;
@@ -32,6 +29,9 @@ System.register(["angular2/core", "./cabecera.component", "./nuevoJugador.compon
             function (partidas_service_1_1) {
                 partidas_service_1 = partidas_service_1_1;
             },
+            function (mock_config_1_1) {
+                mock_config_1 = mock_config_1_1;
+            },
             function (router_1_1) {
                 router_1 = router_1_1;
             }],
@@ -40,9 +40,9 @@ System.register(["angular2/core", "./cabecera.component", "./nuevoJugador.compon
                 function RegistroComponent(_partidasService, _router) {
                     this._partidasService = _partidasService;
                     this._router = _router;
-                    this.texto = "Siguiente";
-                    this.maxJugadores = 4;
+                    this.texto = "Jugar";
                     this.jugadores = [];
+                    this.maxJugadores = mock_config_1.TrivialConf.MAX_JUGADORES; //Necesario para el bindeo en html
                     if (!this.jugadores.length) {
                         this.numJugadores = "" + 0;
                     }
@@ -53,9 +53,9 @@ System.register(["angular2/core", "./cabecera.component", "./nuevoJugador.compon
                     this.ultimoIDPartida = this._partidasService.getPartidas()[this._partidasService.getPartidas().length - 1].id;
                 }
                 RegistroComponent.prototype.addJugador = function () {
-                    if (this.jugadores.length < this.maxJugadores) {
+                    if (this.jugadores.length < mock_config_1.TrivialConf.MAX_JUGADORES) {
                         console.log(this.nombreNuevoJugador);
-                        this.nuevoJugador = new jugador_model_1.Jugador(this.getNewIDJugador(), this.nombreNuevoJugador, "images/avatar1.jpg", 0);
+                        this.nuevoJugador = new jugador_model_1.Jugador(this.getNewIDJugador(), this.nombreNuevoJugador, "images/avatar" + (this.jugadores.length + 1) + ".png", 0, 0, 0);
                         console.log(this.nuevoJugador);
                         console.log(this.jugadores);
                         this.jugadores.push(this.nuevoJugador);
@@ -77,35 +77,19 @@ System.register(["angular2/core", "./cabecera.component", "./nuevoJugador.compon
                     console.log(this.jugadores);
                 };
                 RegistroComponent.prototype.onJugar = function () {
-                    var partida = this.inicializarPartida();
-                    console.log(partida);
-                    this._partidasService.insertPartida(partida);
-                    console.log(this._partidasService.getPartidas());
-                    this._router.navigate(["Juego", { id: partida.id }]);
-                };
-                RegistroComponent.prototype.inicializarPartida = function () {
-                    var teclas = [];
-                    var aciertosJugadores = [];
-                    var erroresJugadores = [];
-                    for (var i = 0; i < this.jugadores.length; i++) {
-                        aciertosJugadores[i] = 0;
-                        erroresJugadores[i] = 0;
-                        switch (i) {
-                            case 1:
-                                teclas[i] = "W";
-                            case 2:
-                                teclas[i] = "A";
-                            case 3:
-                                teclas[i] = "S";
-                            case 4:
-                                teclas[i] = "D";
-                            case 5:
-                                teclas[i] = "F";
-                            case 6:
-                                teclas[i] = "G";
-                        }
+                    if (this.jugadores.length >= mock_config_1.TrivialConf.MIN_JUGADORES) {
+                        var partida = new partida_model_1.Partida(this.getNewIDPartida(), this.jugadores, this._partidasService.getPreguntas(), true);
+                        console.log(partida);
+                        this._partidasService.insertPartida(partida);
+                        console.log(this._partidasService.getPartidas());
+                        this._router.navigate(["Juego", { id: partida.id }]);
                     }
-                    return new partida_model_1.Partida(this.getNewIDPartida(), this.jugadores, this._partidasService.getPreguntas(), teclas, aciertosJugadores, erroresJugadores, true);
+                    else {
+                        window.alert("Deben haber registrados al menos 2 jugadores");
+                    }
+                };
+                RegistroComponent.prototype.onJugarTest = function () {
+                    this._router.navigate(["Juego", { id: 1 }]);
                 };
                 RegistroComponent.prototype.getNewIDPartida = function () {
                     return this.ultimoIDPartida += 1;
@@ -116,7 +100,7 @@ System.register(["angular2/core", "./cabecera.component", "./nuevoJugador.compon
                         selector: "registro",
                         templateUrl: "app/views/registro.html",
                         providers: [partidas_service_1.PartidasService],
-                        directives: [router_1.ROUTER_DIRECTIVES, cabecera_component_1.CabeceraComponent, nuevoJugador_component_1.NuevoJugadorComponent]
+                        directives: [router_1.ROUTER_DIRECTIVES, cabecera_component_1.CabeceraComponent]
                     }), 
                     __metadata('design:paramtypes', [partidas_service_1.PartidasService, router_1.Router])
                 ], RegistroComponent);

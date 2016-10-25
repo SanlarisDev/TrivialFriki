@@ -1,7 +1,9 @@
-@import 'https://fonts.googleapis.com/css?family=Wendy+One';
+@import 'https://fonts.googleapis.com/css?family=Lobster';
+@import 'https://fonts.googleapis.com/css?family=Open+Sans';
+
 
 html {
-	background:#000 no-repeat center center fixed;
+	background:#b97000 url("http://cdn30.us1.fansshare.com/image/wallpaperbackground/orange-background-hd-wallpaper-1147062953.jpg") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	   -moz-background-size: cover;
 	     -o-background-size: cover;
@@ -14,10 +16,18 @@ body {
 	-webkit-overflow-scrolling: touch;
 	line-height: 1.5em;
 	font-size:20px;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: 'Open Sans', Arial, sans-serif;
 	color:#fff;
 	color:rgba(255,255,255,.8);
 	font-weight: normal;
+	margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+h2, h3{
+	font-family: 'Open Sans', Arial, sans-serif !important;
+	font-weight: 900;
 }
 
 inicio .section{
@@ -27,6 +37,22 @@ juego .ventanaJuego{
 	color:#000;
 }
 
+cabecera .header{
+	background: rgba(255,255,255,0.2);
+}
+
+.margen-top-10{
+	margin-top: 10px;
+}
+.margen-top-15{
+	margin-top: 15px;
+}
+.margen-top-20{
+	margin-top: 20px;
+}
+.margen-top-30{
+	margin-top: 30px;
+}
 /**********************/
 /*FULL SCREEN - VIDEO */
 /**********************/
@@ -85,10 +111,41 @@ juego .ventanaJuego{
 	padding-top:10px
 }
 
+inicio a.btn-inicio {
+	padding: 20px 50px;
+    background: #ff8f00;
+    border-radius: 5px;
+    width: 50%;
+    display: block;
+    margin:0 auto;
+}
+
+inicio a.btn-inicio:hover{
+	text-decoration: none;
+	background: #c57003;
+}
+
+.contenidoInicio {
+    background: rgba(255,255,255,0.2);
+    border-radius: 5px;
+    padding: 30px;
+}
+
 /******************/
 /* FICHA JUGADOR */
+.containerJugadores{
+	min-height: 344px;
+}
+
+.numJugadores {
+    background: rgba(255,255,255,0.2);
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
 .tablaJugadores{
 	display: table;
+	color:#000;
 }
 
 .tablaJugadores .panel{
@@ -116,7 +173,6 @@ juego .ventanaJuego{
 }
 
 .tablaJugadores .datosJugador p{
-	color:#000;
 	font-size: 1.2em;
 }
 
@@ -126,100 +182,183 @@ juego .ventanaJuego{
 	font-size: 2em;
 }
 
-
-
-/********************************************************/
-/*                    Navigation bar                    */
-/********************************************************/
-.mainmenu { z-index: 999999; width:100%;  padding: 30px 0 0 0;}
-@media (min-width: 768px) {
-	.mainmenu { position: fixed; }
+.tablaJugadores .datosBorrar{
+	width: 20%;
+	display: table-cell;
+	vertical-align: top;
+	padding-left: 0px;
+	padding-top: 15px;
+	text-align: center;
 }
 
-.navbar-toggle {
-	position:relative;
-	float:left;
-	display:block;
-	padding: 9px 10px;
-	background: rgba(255, 255, 255, 0.2);
-	background-image: none;
-	border: 0 none;
-	top:0px;
-	-webkit-border-radius: 2px;
-	   -moz-border-radius: 2px;
-	        border-radius: 2px;
-	outline: 0;
-	opacity: 1;
-	-webkit-transition: all .45s;
-	   -moz-transition: all .45s;
-	        transition: all .45s;
-	        float: left;
-}
-.navbar-toggle .icon-bar {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: #fff;
-}
-.navbar-toggle .icon-bar + .icon-bar {
-	margin-top: 4px;
-}
-.open .navbar-toggle {
-	top:-70px;
-	opacity: 0;
-}
-.mainmenu .dropdown-menu {
-	top: -14em;
-	left: 0px;
-	font-size: 13px;
-	padding:0;
-	background:none;
-	border:0 none;
-	border-radius: 2px;
-	-webkit-box-shadow: none;
-	box-shadow: none;
-	display:block;
-	opacity:0;
-	-webkit-transition: all .45s;
-	   -moz-transition: all .45s;
-	        transition: all .45s;
-}
-.mainmenu .dropdown-menu .active {
-	font-weight:bold;
-}
-.mainmenu .open .dropdown-menu {
-	top:2px;
-	opacity:1;
-}
-.mainmenu .dropdown-menu a {
-	padding:10px 10px;
-	margin:0;
-	color:white;
-	text-decoration: none;
-	-webkit-border-radius: 2px;
-	   -moz-border-radius: 2px;
-	        border-radius: 2px;
-}
-.mainmenu .dropdown-menu a:hover {
-	background:rgba(255,255,255,.1);
-	color:white;
-	padding:10px 8px 10px 12px;
+.tablaJugadores i.fa{
+	cursor: pointer;
 }
 
-
-.margin-top-20{
-	margin-top:20px;
+juego .ventanaJuego .panel {
+    text-align: center;
+    vertical-align: middle;
 }
-/********************************************************/
-/*             Sections - universal classes             */
-/********************************************************/
-.section {
-	z-index: 1;
+
+juego .ventanaJuego .panel .contenido{
+	min-height: 150px;
+	display: table;
 	width: 100%;
-	overflow:auto;
-	padding-bottom:50px;
-	top:0;
 }
+
+juego .ventanaJuego .panel .contenido p{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	width: 100%;
+	z-index: 10;
+}
+
+juego .ventanaJuego .icon-fruit{
+	position:absolute;
+	margin-top:10px;
+	border-radius: 100%;
+	background: #fff;
+	width: 20%;
+	max-width:100px;
+	z-index: 1;
+}
+
+juego .ventanaJuego .icon-fruit img{
+		width: 100%;
+}
+
+juego .ventanaJuego .leyenda-fruit span{
+	  font-size: 0.7em;
+}
+
+juego .puntuacionJuego .panel{
+	overflow: hidden;
+}
+
+juego .puntuacionJuego .avatarJugador{
+	  width: 100%;
+		max-width: 125px;
+		float:left;
+}
+
+juego .puntuacionJuego .avatarJugador img {
+    width: 100%;
+}
+
+juego .puntuacionJuego .datosJugador{
+	color:#000;
+	float:left;
+	text-align: left;
+	padding:20px 5% 0px;
+}
+
+juego .panel.penalizado {
+    opacity: 0.5;
+}
+
+juego .panel.elegido {
+	box-shadow: inset 0px 0px 44px #ff8f00;
+}
+
+juego #alertRespuesta{
+	display: none;
+	position: absolute;
+	text-align: center;
+	padding-top: 10%;
+	background:rgba(0,0,0,0.5);
+	width:100%;
+	height: 100%;
+	z-index: 90;
+}
+
+#alertFallo, #alertAcierto, #alertSiguiente, #alertGanador{
+	display:none;
+}
+
+#alertFallo .recuadro{
+	background: #ff0000;
+}
+
+#alertAcierto .recuadro{
+	background: #00ff00;
+}
+
+#alertSiguiente .recuadro{
+	background: #ff8f00;
+}
+
+#alertGanador .recuadro{
+	background: #ff8f00;
+}
+
+juego #alertSiguiente{
+	position: absolute;
+	bottom: 20%;
+	width:100%;
+	left:0%;
+	right: 0%;
+}
+
+juego .recuadro {
+    background: rgba(255,255,255,0.3);
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 5px;
+    padding: 50px;
+    z-index:99999;
+}
+
+juego .recuadro h2{
+	font-weight: 900;
+	text-shadow: 1px 1px 1px #888;
+	font-size: 2.5em;
+}
+
+juego .barraTiempo{
+	min-height: 40px;
+	padding-top:20px;
+}
+
+juego .barraTiempo .progress-bar{
+	text-align: right;
+}
+
+juego .barraTiempo #progress-seg{
+	padding-right: 10px;
+}
+
+juego .oculto{
+	display: none;
+}
+juego .mostrado{
+	display: block;
+}
+
+.modal-dialog {
+    color: #000;
+}
+
+.modal-dialog .btn{
+    background:#ff8f00;
+}
+
+.modal-dialog .btn:hover{
+    background:#c57003;
+    color:#fff;
+}
+
+@media (width: 1080px){
+	juego .puntuacionJuego .avatarJugador{
+		float:none;
+		margin: 0 auto;
+	}
+	juego .puntuacionJuego .datosJugador{
+	  	text-align: center;
+	  	line-height: 15px;
+	}
+}
+
 
 /********************************************************/
 /*                      Typography                      */
@@ -234,7 +373,7 @@ a:hover, a:active { color:#fff; text-decoration: underline; }
 
 .title,
 .subtitle {
-	font-family: 'Wendy One', Helvetica, Arial, sans-serif;
+	font-family: 'Lobster', Helvetica, Arial, sans-serif;
 	font-weight:normal;
 	font-size: 3em;
 	margin-bottom:15px;
@@ -251,7 +390,7 @@ a:hover, a:active { color:#fff; text-decoration: underline; }
 	margin-bottom:40px;
 }
 .tagline {
-	font-size:1.4em;
+	font-size:2.3em;
 	line-height:1.3em;
 	font-weight:bold;
 	margin-bottom:75px;

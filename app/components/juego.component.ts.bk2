@@ -1,0 +1,277 @@
+import {Component, OnInit} from "angular2/core";
+import {CabeceraComponent} from "./cabecera.component";
+import {Jugador} from "../models/jugador.model";
+import {Partida} from "../models/partida.model";
+import {Pregunta} from "../models/pregunta.model";
+import {JUGADORES, PARTIDAS} from "../services/mock.partidas";
+import {PartidasService} from "../services/partidas.service";
+import {TrivialConf}  from "../services/mock.config";
+import {ROUTER_DIRECTIVES, RouteConfig, Router, RouteParams} from "angular2/router"; //Necesario para tener enlace desde app.component
+
+@Component({
+  selector: "Juego",
+  templateUrl: "app/views/juego.html",
+  providers: [PartidasService],
+  directives: [ROUTER_DIRECTIVES, CabeceraComponent]
+})
+
+
+export class JuegoComponent implements OnInit{
+  /* ----- SCOPE */
+  public preguntaActual: Pregunta; // Pregunta actual
+  public jugadores: Jugador[];
+
+  /* ----- Variables globales de eventos */
+  public teclaPulsada: number;
+  public eventKeyup;
+
+  /* ----- Variables globales */
+  public actualPartida: Partida;
+  public preguntas: Array<Object>; // Listado de preguntas de la partida
+
+  public indexPreguntaActual: number; // Index de la pregunta actual
+  public preguntaVacia: Pregunta;
+
+  public indexJugador: number;
+  public indexPregunta: number;
+
+
+  constructor(private _partidasService: PartidasService, private _router: Router, private _routeParams: RouteParams){
+    this.preguntas = []; // Inicialización del array
+    this.jugadores = [];
+    // Se inicializa el objeto preguntaActual para que no de fallo el bindeo
+    this.preguntaVacia = new Pregunta(0,"","","","","",0);
+    this.preguntaActual = this.preguntaVacia;
+    this.activarEventoKey(1,0);
+    this.activarEventoKey(0,0);
+    this.indexJugador = -1;
+    this.indexPregunta = -1;
+  }
+
+  ngOnInit(): any {
+    // Al iniciar la pantalla obtengo la partida actual
+    // cuyo ID no los envían por parámetro
+    var partidas: Array<Partida> =  this._partidasService.getPartidas();
+    var id: number = parseInt(this._routeParams.get('id'));
+
+    for(var i=0; i < partidas.length; i++){
+        if(partidas[i].id == id){
+          this.actualPartida = partidas[i];
+      }
+    }
+    //Obtengo el array de jugadores y lo asigno a la variable global
+    this.jugadores = <Jugador[]> this.actualPartida.jugadores;
+    this.inicializarPartida();
+
+    //Empieza el juego
+    this.jugar();
+  }
+
+  inicializarPartida(){
+    var i=0;
+    for(let jugador of this.jugadores){
+      jugador.puntosPartida= 0;
+      i += 1;
+      switch(i){
+        case 1:
+          jugador.teclaPartida=TrivialConf.KEY_W;
+        case 2:
+          jugador.teclaPartida=TrivialConf.KEY_A;
+        case 3:
+          jugador.teclaPartida=TrivialConf.KEY_S;
+        case 4:
+          jugador.teclaPartida=TrivialConf.KEY_D;
+        case 5:
+          jugador.teclaPartida=TrivialConf.KEY_F;
+        case 6:
+          jugador.teclaPartida=TrivialConf.KEY_G;
+        }
+    }
+  }
+  /* ****************************************** */
+  /* **************** EL JUEGO **************** */
+  /* ****************************************** */
+
+    jugar(){
+      var finPartida = false;
+      var finPregunta = false;
+      var nPreguntas = 0;
+
+      // Me guardo el listado de las preguntas de la partida actual
+      this.preguntas = this.actualPartida.preguntas;
+      console.log(this.actualPartida);
+      console.log(this.preguntas);
+
+      while(!finPartida){
+        this.getPreguntaAleatoria();
+        console.log(this.preguntaActual);
+
+        this.getBarraDeTiempo();
+        console.log(this.preguntaActual);
+
+
+        this.activarEventoKey(1,1);
+        console.log(this.preguntaActual);
+
+        var intervalPregunta=setInterval(function(preguntaActual){
+          finPregunta = this.comprobarRespuesta();
+          console.log("finpregunta: "+ finPregunta);
+          if(finPregunta){
+            clearInterval(intervalPregunta);
+          }
+        }, 10, this.preguntaActual);
+
+        this.activarEventoKey(1,0);
+        this.activarEventoKey(0,1);
+
+        if(nPreguntas==TrivialConf.N_PREGUNTAS){
+          finPartida = true;
+        }else{
+          nPreguntas+=1;
+        }
+      }
+
+
+    }
+
+  activarEventoKey(activar, fase){
+    // fase 0 = Jugadores
+    // fase 1 = Opciones
+    if(activar){
+      this.eventKeyup=document.addEventListener('keyup', function(e: KeyboardEvent){
+                                              console.log("keycode activo: "+ e.keyCode);
+                                              this.pulsarTecla(e.keyCode, fase);
+                                            }, false);
+      console.log("Keydown ACTIVADO");
+    }else{
+      this.eventKeyup=document.removeEventListener('keyup',function(e: KeyboardEvent){
+                                              console.log("keycode desactivado: "+e.keyCode);
+                                              this.pulsarTecla(e.keyCode, fase);
+                                            }, false);
+      console.log("Keydown Desactivado");
+    }
+  }
+
+  pulsarTecla(e, fase){
+    // fase 0 = Jugadores
+    // fase 1 = Opciones
+    this.indexJugador=0;
+
+    if(fase){
+      this.obtenerOpcionPorKey(e);
+      this.activarEventoKey(0,1);
+      this.activarEventoKey(1,0);
+      console.log("ON botones JUGADOR");
+    }else{
+      this.obtenerJugadorPorKey(e);
+      this.activarEventoKey(0,0);
+      this.activarEventoKey(1,1);
+      console.log("ON botones OPCIONES");
+    }
+
+    console.log("jugador seleccionado "+this.indexJugador);
+    }
+
+  getPreguntaAleatoria(){
+    this.preguntaActual = new Pregunta(0,"","","","","",0);
+    // Obtiene un index aleatorio de todas las preguntas
+    this.indexPreguntaActual = Math.floor(Math.random() * (this.preguntas.length));
+    this.preguntaActual = <Pregunta> this.preguntas[this.indexPreguntaActual];
+
+    //setTimeout(asignarPreguntaActual, 1000);
+
+    function asignarPreguntaActual(){
+      JuegoComponent.prototype.preguntaActual = <Pregunta> JuegoComponent.prototype.preguntas[JuegoComponent.prototype.indexPreguntaActual];
+    }
+  }
+
+  getBarraDeTiempo(){
+    var preguntaTimer = TrivialConf.TIEMPO_PREGUNTA;
+    var vBarTimer = setInterval(barTimer, preguntaTimer/100);
+    var a=0;
+
+    var r=66; var g=139; var b=202;
+    var barra=document.getElementById("progress-bar");
+    barra.style.backgroundColor = "rgb("+r+","+g+","+b+")";
+    function barTimer() {
+      a++;
+
+      barra.style.width = (a)+"%";
+      if(a>70){
+        r+=10;
+        b-=20;
+        g-=5;
+        barra.style.backgroundColor = "rgb("+r+","+g+","+b+")";
+      }
+    }
+
+    var vSegTimer = setInterval(segTimer, 1000);
+    var i=(preguntaTimer/1000);
+    function segTimer() {
+      i--;
+      document.getElementById("progress-seg").innerHTML = i+"s";
+    }
+
+     var vSegTotal = setTimeout( function(){
+       clearTimeout(vBarTimer);
+       clearTimeout(vSegTimer);
+       i=0;
+       a=0;
+     }
+      , preguntaTimer)
+  }
+
+  obtenerJugadorPorKey(e){
+    switch(e){
+      case TrivialConf.KEY_W: // W
+        this.indexJugador = 0;
+        break;
+      case TrivialConf.KEY_A: // A
+        this.indexJugador = 1;
+        break;
+      case TrivialConf.KEY_S: // S
+        this.indexJugador = 2;
+        break;
+      case TrivialConf.KEY_D: // D
+        this.indexJugador = 3;
+        break;
+      case TrivialConf.KEY_F: // F
+        this.indexJugador = 4;
+        break;
+      case TrivialConf.KEY_G: // G
+        this.indexJugador = 5;
+        break;
+    }
+  }
+
+  obtenerOpcionPorKey(e){
+    switch(e){
+      case TrivialConf.KEY_ARROW_UP: // arriba
+        this.indexPregunta = 0;
+        break;
+      case TrivialConf.KEY_ARROW_LEFT: // izquierda
+        this.indexPregunta = 1;
+        break;
+      case TrivialConf.KEY_ARROW_DOW: // abajo
+        this.indexPregunta = 2;
+        break;
+      case TrivialConf.KEY_ARROW_RIGHT: // derecha
+        this.indexPregunta = 3;
+        break;
+    }
+  }
+
+  comprobarRespuesta(){
+    if(JuegoComponent.prototype.indexPregunta==(JuegoComponent.prototype.preguntaActual.opcionCorrecta+1)){
+        console.log("acertaste");
+      return true;
+    }else if(this.indexPregunta){
+      console.log("No acertaste");
+      return false;
+    }else{
+      return false;
+    }
+
+  }
+
+}

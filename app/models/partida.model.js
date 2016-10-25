@@ -6,13 +6,10 @@ System.register([], function(exports_1, context_1) {
         setters:[],
         execute: function() {
             Partida = (function () {
-                function Partida(id, jugadores, preguntas, teclas, aciertos, errores, fin) {
+                function Partida(id, jugadores, preguntas, fin) {
                     this.id = id;
                     this.jugadores = jugadores;
                     this.preguntas = preguntas;
-                    this.teclas = teclas;
-                    this.aciertos = aciertos;
-                    this.errores = errores;
                     this.fin = fin;
                 }
                 return Partida;
