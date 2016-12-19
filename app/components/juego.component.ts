@@ -62,8 +62,6 @@ export class JuegoComponent implements OnInit{
   public jugadorPenalizado: number;
   public numPreguntas: number;
 
-
-
   constructor(private _partidasService: PartidasService, private _router: Router, private _routeParams: RouteParams){
     // Inicializaciones:
 
